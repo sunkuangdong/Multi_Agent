@@ -1,0 +1,24 @@
+{
+  "name": "multi_agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunkuangdong/Multi_Agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunkuangdong/Multi_Agent/issues"
+  },
+  "homepage": "https://github.com/sunkuangdong/Multi_Agent#readme",
+  "dependencies": {
+    "@langchain/openai": "^1.4.3",
+    "dotenv": "^17.4.1"
+  }
+}
