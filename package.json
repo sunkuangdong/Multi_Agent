@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/sunkuangdong/Multi_Agent#readme",
   "dependencies": {
+    "@langchain/core": "^1.1.39",
     "@langchain/openai": "^1.4.3",
-    "dotenv": "^17.4.1"
+    "dotenv": "^17.4.1",
+    "zod": "^4.3.6"
   }
 }
