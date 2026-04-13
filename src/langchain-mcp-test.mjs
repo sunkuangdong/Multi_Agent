@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { MultiServerMCPClient } from '@langchain/mcp-adapters';
 import { ChatOpenAI } from '@langchain/openai';
 import chalk from 'chalk';
-import { HumanMessage, ToolMessage } from '@langchain/core/messages';
+import { HumanMessage, SystemMessage, ToolMessage } from '@langchain/core/messages';
 
 const model = new ChatOpenAI({
   modelName: process.env.MODEL_NAME || 'gpt-4o-mini',
@@ -24,9 +24,25 @@ const mcpClient = new MultiServerMCPClient({
 
 const tools = await mcpClient.getTools();
 const modelWithTools = model.bindTools(tools);
+let resourceContent = '';
+
+try {
+  const res = await mcpClient.listResources();
+
+  for (const [serverName, resources] of Object.entries(res)) {
+    for (const resource of resources) {
+      const content = await mcpClient.readResource(serverName, resource.uri);
+      resourceContent += `${content?.[0]?.text ?? ''}\n`;
+    }
+  }
+} catch (error) {
+  console.error(chalk.red('Error:'), error);
+}
 
 async function runAgentWithTools(query, maxIterations = 30) {
-  const messages = [new HumanMessage(query)];
+  const messages = resourceContent.trim()
+    ? [new SystemMessage(resourceContent), new HumanMessage(query)]
+    : [new HumanMessage(query)];
 
   for (let i = 0; i < maxIterations; i++) {
     console.log(chalk.bgGreen('Waiting for the tool call to complete...'));
@@ -66,11 +82,10 @@ async function runAgentWithTools(query, maxIterations = 30) {
 }
 
 try {
-//   const answer = await runAgentWithTools('What is the user information of the user with id 002?');
-  const res = await mcpClient.listResources();
-  console.log(chalk.green('\nResources:\n'), res);
-  await mcpClient.close();
+  const answer = await runAgentWithTools('What is the MCP server guide?');
+  console.log(chalk.green('\nFinal answer:\n'), answer);
 } catch (error) {
   console.error(chalk.red('Error:'), error);
+} finally {
   await mcpClient.close();
 }
