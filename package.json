@@ -20,8 +20,10 @@
   "homepage": "https://github.com/sunkuangdong/Multi_Agent#readme",
   "dependencies": {
     "@langchain/core": "^1.1.39",
+    "@langchain/mcp-adapters": "^1.1.3",
     "@langchain/openai": "^1.4.3",
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "chalk": "^5.6.2",
     "dotenv": "^17.4.1",
     "zod": "^4.3.6"
   }
