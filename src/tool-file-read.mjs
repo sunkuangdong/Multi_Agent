@@ -61,7 +61,7 @@ messages.push(response);
 while (response.tool_calls && response.tool_calls.length > 0) {
   const toolResults = await Promise.all(
     response.tool_calls.map(async (toolCall) => {
-      const tool = tools.find((tool) => tool.name === toolCall.name);
+      const tool = toolsByName[toolCall.name];
       if (!tool) {
         throw new Error(`Tool ${toolCall.name} not found`);
       }
