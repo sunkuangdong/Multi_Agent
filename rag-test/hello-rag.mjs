@@ -124,7 +124,7 @@ for (const question of questions) {
     
     // Print the retrieved documents alongside their similarity scores.
     console.log("\n[Retrieved Documents and Similarity Scores]");
-        retrievedDocs.forEach((doc, i) => {
+    retrievedDocs.forEach((doc, i) => {
         // Match each retrieved document with its score.
         const scoredResult = scoredResults.find(([scoredDoc]) =>
             scoredDoc.pageContent === doc.pageContent
@@ -135,7 +135,7 @@ for (const question of questions) {
         console.log(`\n[Document ${i + 1}] Similarity: ${similarity}`);
         console.log(`Content: ${doc.pageContent}`);
         console.log(`Metadata: chapter=${doc.metadata.chapter}, character=${doc.metadata.character}, type=${doc.metadata.type}, mood=${doc.metadata.mood}`);
-});
+    });
     
     // Build the prompt from the retrieved context.
     const context = retrievedDocs
